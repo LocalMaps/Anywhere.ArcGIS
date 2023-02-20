@@ -48,5 +48,16 @@
                 : new SearchHostedFeatureServices(username);
             return Get<SearchHostedFeatureServicesResponse, SearchHostedFeatureServices>(search, ct);
         }
+
+        /// <summary>
+        /// Returns an item object from a portal
+        /// </summary>
+        /// <param name="itemId">The item id to get</param>
+        /// <param name="ct">Optional cancellation token to cancel pending request</param>
+        /// <returns></returns>
+        public Task<SearchItemResponse> GetItem(string itemId, CancellationToken ct = default(CancellationToken))
+        {
+            return Get<SearchItemResponse, SearchItem>(new SearchItem(itemId), ct);
+        }
     }
 }

@@ -484,6 +484,37 @@
         }
 
         /// <summary>
+        /// Buffer the list of geometries passed in using the GeometryServer
+        /// </summary>
+        /// <typeparam name="T">The type of the geometries</typeparam>
+        /// <param name="features">A collection of features which will have their geometries buffered</param>
+        /// <param name="spatialReference">The spatial reference of the geometries</param>
+        /// <param name="distance">Distance in meters to buffer the geometries by</param>
+        /// <param name="ct">Optional cancellation token to cancel pending request</param>
+        /// <returns>The corresponding features with the newly buffered geometries</returns>
+        public virtual async Task<List<Feature<Polygon>>> BufferFeatures<T>(List<Feature<T>> features, SpatialReference spatialReference, double distance, CancellationToken ct = default(CancellationToken)) where T : IGeometry
+        {
+            var op = new BufferGeometry<T>(GeometryServiceEndpoint, features, spatialReference, distance);
+            var buffered = await Post<GeometryOperationResponse<Polygon>, BufferGeometry<T>>(op, ct).ConfigureAwait(false);
+
+            if (ct.IsCancellationRequested) return null;
+
+            var bufferFeatures = new List<Feature<Polygon>>();
+            for (int i = 0; i < features.Count; i++)
+            {
+                bufferFeatures.Add(new Feature<Polygon>()
+                {
+                    Attributes = features[i].Attributes,
+                    Geometry = buffered.Geometries[i]
+                });
+            }
+
+            var result = bufferFeatures;
+            if (result.First().Geometry.SpatialReference == null) result.First().Geometry.SpatialReference = spatialReference;
+            return result;
+        }
+
+        /// <summary>
         /// Simplify the list of geometries passed in using the GeometryServer.Simplify permanently alters the input geometry so that it becomes topologically consistent.
         /// </summary>
         /// <typeparam name = "T" > The type of the geometries</typeparam>
