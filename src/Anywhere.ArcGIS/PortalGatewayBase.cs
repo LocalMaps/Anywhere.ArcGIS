@@ -1,7 +1,6 @@
 ﻿namespace Anywhere.ArcGIS
 {
     using Common;
-    using global::ArcGIS.ServiceModel.Operation;
     using Logging;
     using Operation;
     using System;
@@ -12,7 +11,7 @@
     using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
-    using static global::ArcGIS.ServiceModel.Operation.QueryRelatedRecords;
+    using static Anywhere.ArcGIS.Operation.QueryRelatedRecords;
 
     /// <summary>
     /// ArcGIS Server gateway base. Contains code to make HTTP(S) calls and operations available to all gateway types

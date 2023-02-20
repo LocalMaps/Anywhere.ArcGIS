@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace ArcGIS.ServiceModel.Operation
+namespace Anywhere.ArcGIS.Operation
 {
     [DataContract]
     public class QueryRelatedRecords : ArcGISServerOperation
