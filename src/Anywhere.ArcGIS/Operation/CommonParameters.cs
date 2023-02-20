@@ -5,6 +5,7 @@ namespace Anywhere.ArcGIS.Operation
     public static class Operations
     {
         public const string Query = "query";
+        public const string QueryRelatedRecords = "queryRelatedRecords";
         public const string QueryAttachments = "queryAttachments";
         public const string QueryDomains = "queryDomains";
         public const string Find = "find";
